@@ -6,11 +6,13 @@ on:
       - main
 
 env:
-  ECR_REPO_NAME: demo-github-cicd                             # Your ECR repository name
   IMAGE_NAME: notes-app                    # Your image name
   DOCKERFILE_PATH: Dockerfile             # Path to Dockerfile
   IMAGE_TAG: latest                               # Default image tag
-  AWS_REGION: ap-south-1     
+  AWS_REGION: ap-south-1
+  SET_NAME: deepdhameliya
+  NEW_IMAGE_NAME: notes-app
+  
 
 
 jobs:
@@ -34,8 +36,8 @@ jobs:
 
     - name: Tag Docker Image for ECR
       run: |
-        docker tag $IMAGE_NAME:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
+        docker tag $IMAGE_NAME:$IMAGE_TAG $SET_NAME/$NEW_IMAGE_NAME:$IMAGE_TAG
 
     - name: Push Docker Image to AWS ECR
       run: |
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
+        docker push $SET_NAME/$NEW_IMAGE_NAME:$IMAGE_TAG
